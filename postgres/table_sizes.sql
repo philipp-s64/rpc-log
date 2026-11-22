@@ -6,3 +6,7 @@ LIMIT 20;
 -- Cache hit ratio
 SELECT sum(blks_hit) / nullif(sum(blks_hit + blks_read), 0) AS ratio FROM pg_stat_database;
 
+-- Active queries older than 5 seconds
+SELECT pid, now() - query_start AS duration, left(query, 80)
+FROM pg_stat_activity WHERE state = 'active';
+
